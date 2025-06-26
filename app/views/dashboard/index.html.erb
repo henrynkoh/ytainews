@@ -1,0 +1,550 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header with improved styling -->
+    <div class="mb-8 text-center">
+      <div class="flex items-center justify-center mb-4">
+        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+          <span class="text-2xl">🤖</span>
+        </div>
+      </div>
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">AI News Shorts Dashboard</h1>
+      <p class="text-xl text-gray-600">Automated AI/LLM news to YouTube Shorts pipeline</p>
+    </div>
+
+    <!-- Enhanced Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white overflow-hidden shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+        <div class="p-6">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-5 w-0 flex-1">
+              <dl>
+                <dt class="text-sm font-medium text-gray-500 truncate">Today's Videos</dt>
+                <dd class="text-2xl font-bold text-gray-900"><%= @today_count %></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white overflow-hidden shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+        <div class="p-6">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-5 w-0 flex-1">
+              <dl>
+                <dt class="text-sm font-medium text-gray-500 truncate">Total Views</dt>
+                <dd class="text-2xl font-bold text-gray-900"><%= number_with_delimiter(@total_views) %></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white overflow-hidden shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+        <div class="p-6">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-5 w-0 flex-1">
+              <dl>
+                <dt class="text-sm font-medium text-gray-500 truncate">Success Rate</dt>
+                <dd class="text-2xl font-bold text-gray-900"><%= @success_rate %>%</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white overflow-hidden shadow-xl rounded-2xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+        <div class="p-6">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ml-5 w-0 flex-1">
+              <dl>
+                <dt class="text-sm font-medium text-gray-500 truncate">Pending</dt>
+                <dd class="text-2xl font-bold text-gray-900"><%= @pending_count %></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced Action Buttons -->
+    <div class="mb-8">
+      <div class="flex flex-wrap gap-4 justify-center">
+        <%= form_with url: dashboard_start_crawling_path, method: :post, local: true, class: 'inline-block' do |form| %>
+          <%= form.button type: 'submit', class: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-2xl text-sm font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center space-x-2 cursor-pointer' do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <span>Start Crawling</span>
+          <% end %>
+        <% end %>
+        
+        <%= form_with url: dashboard_process_pipeline_path, method: :post, local: true, class: 'inline-block' do |form| %>
+          <%= form.button type: 'submit', class: 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-8 py-4 rounded-2xl text-sm font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center space-x-2 cursor-pointer' do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+            <span>Process Pipeline</span>
+          <% end %>
+        <% end %>
+        
+        <%= link_to dashboard_logs_path, class: 'bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white px-8 py-4 rounded-2xl text-sm font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center space-x-2' do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          <span>View Logs</span>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Real-time Progress Section -->
+    <div id="progress-section" class="mb-8" style="display: none;">
+      <!-- Crawling Progress -->
+      <div id="crawling-progress" class="bg-white shadow-xl rounded-2xl border border-blue-100 mb-4 p-6" style="display: none;">
+        <div class="flex items-center mb-4">
+          <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">News Crawling Progress</h3>
+        </div>
+        
+        <div class="mb-4">
+          <div class="flex justify-between text-sm text-gray-600 mb-2">
+            <span id="crawling-message">🔍 Connecting to AI news sources...</span>
+            <span id="crawling-percentage">0%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div id="crawling-bar" class="bg-gradient-to-r from-blue-500 to-blue-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+        
+        <div class="flex justify-between text-xs text-gray-500">
+          <span id="crawling-elapsed">Elapsed: 0s</span>
+          <span id="crawling-remaining">Est. remaining: 45s</span>
+        </div>
+      </div>
+
+      <!-- Pipeline Progress -->
+      <div id="pipeline-progress" class="bg-white shadow-xl rounded-2xl border border-green-100 p-6" style="display: none;">
+        <div class="flex items-center mb-4">
+          <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center mr-3">
+            <svg class="w-5 h-5 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900">AI Pipeline Progress</h3>
+        </div>
+        
+        <div class="mb-4">
+          <div class="flex justify-between text-sm text-gray-600 mb-2">
+            <span id="pipeline-message">⚡ Starting AI pipeline...</span>
+            <span id="pipeline-percentage">0%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div id="pipeline-bar" class="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+        
+        <div class="flex justify-between text-xs text-gray-500">
+          <span id="pipeline-stats">0/0 completed</span>
+          <span id="pipeline-processing">0 processing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flash Messages -->
+    <% if notice %>
+      <div class="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm text-green-700"><%= notice %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm text-red-700"><%= alert %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Enhanced Recent Videos -->
+    <div class="bg-white shadow-xl overflow-hidden sm:rounded-2xl mb-8 border border-gray-100">
+      <div class="px-6 py-6 sm:px-8 bg-gradient-to-r from-gray-50 to-white">
+        <h3 class="text-2xl font-bold text-gray-900 flex items-center">
+          <svg class="w-6 h-6 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+          </svg>
+          Recent Videos
+        </h3>
+        <p class="mt-2 text-gray-600">Latest AI news videos processed through the pipeline</p>
+      </div>
+      <ul class="divide-y divide-gray-200">
+        <% @recent_videos.each do |article| %>
+          <li class="px-6 py-6 sm:px-8 hover:bg-gray-50 transition-colors duration-200" data-status="<%= article.status %>">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center flex-1">
+                <div class="flex-shrink-0 h-12 w-12">
+                  <div class="h-12 w-12 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center shadow-lg">
+                    <span class="text-lg font-bold text-white">
+                      <%= article.source&.first&.upcase || 'N' %>
+                    </span>
+                  </div>
+                </div>
+                <div class="ml-4 flex-1">
+                  <div class="text-base font-semibold text-gray-900">
+                    <%= truncate(article.title, length: 60) %>
+                  </div>
+                  <div class="text-sm text-gray-500 flex items-center mt-1">
+                    <span class="bg-gray-100 px-2 py-1 rounded-full text-xs font-medium mr-2"><%= article.source %></span>
+                    <%= time_ago_in_words(article.created_at) %> ago
+                  </div>
+                  
+                  <!-- Progress Bar Section -->
+                  <div class="mt-3">
+                    <% 
+                      progress_info = case article.status
+                      when 'pending' then { percentage: 10, color: 'bg-blue-500', message: 'Generating script...', estimated: '1-2 min' }
+                      when 'script_ready' then { percentage: 35, color: 'bg-purple-500', message: 'Creating audio...', estimated: '2-3 min' }
+                      when 'audio_ready' then { percentage: 65, color: 'bg-orange-500', message: 'Generating video...', estimated: '3-4 min' }
+                      when 'video_ready' then { percentage: 85, color: 'bg-green-500', message: 'Uploading to YouTube...', estimated: '1-2 min' }
+                      when 'uploaded', 'published' then { percentage: 100, color: 'bg-green-600', message: 'Complete!', estimated: 'Done' }
+                      when 'failed' then { percentage: 0, color: 'bg-red-500', message: 'Failed - Click retry', estimated: 'Error' }
+                      else { percentage: 5, color: 'bg-gray-400', message: 'Initializing...', estimated: '...' }
+                      end
+                    %>
+                    
+                    <div class="flex items-center justify-between text-xs text-gray-600 mb-1">
+                      <span class="font-medium <%= article.status == 'failed' ? 'text-red-600' : 'text-gray-700' %>">
+                        <%= progress_info[:message] %>
+                      </span>
+                      <div class="flex items-center space-x-2">
+                        <span class="font-bold text-sm <%= progress_info[:percentage] == 100 ? 'text-green-600' : 'text-blue-600' %>">
+                          <%= progress_info[:percentage] %>%
+                        </span>
+                        <% unless article.status.in?(['uploaded', 'published', 'failed']) %>
+                          <span class="text-gray-500">• <%= progress_info[:estimated] %></span>
+                        <% end %>
+                      </div>
+                    </div>
+                    
+                    <!-- Animated Progress Bar -->
+                    <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                      <div class="h-2 rounded-full transition-all duration-500 ease-out <%= progress_info[:color] %> 
+                                  <%= article.status.in?(['pending', 'script_ready', 'audio_ready', 'video_ready']) ? 'progress-pulse' : '' %>"
+                           style="width: <%= progress_info[:percentage] %>%"></div>
+                    </div>
+                    
+                    <!-- Pipeline Steps Indicator -->
+                    <div class="flex items-center justify-between mt-2 text-xs">
+                      <div class="flex items-center space-x-1">
+                        <div class="w-2 h-2 rounded-full <%= article.status.in?(['script_ready', 'audio_ready', 'video_ready', 'uploaded', 'published']) ? 'bg-green-500' : 'bg-gray-300' %>"></div>
+                        <span class="<%= article.status.in?(['script_ready', 'audio_ready', 'video_ready', 'uploaded', 'published']) ? 'text-green-600 font-medium' : 'text-gray-500' %>">Script</span>
+                      </div>
+                      <div class="flex items-center space-x-1">
+                        <div class="w-2 h-2 rounded-full <%= article.status.in?(['audio_ready', 'video_ready', 'uploaded', 'published']) ? 'bg-green-500' : 'bg-gray-300' %>"></div>
+                        <span class="<%= article.status.in?(['audio_ready', 'video_ready', 'uploaded', 'published']) ? 'text-green-600 font-medium' : 'text-gray-500' %>">Audio</span>
+                      </div>
+                      <div class="flex items-center space-x-1">
+                        <div class="w-2 h-2 rounded-full <%= article.status.in?(['video_ready', 'uploaded', 'published']) ? 'bg-green-500' : 'bg-gray-300' %>"></div>
+                        <span class="<%= article.status.in?(['video_ready', 'uploaded', 'published']) ? 'text-green-600 font-medium' : 'text-gray-500' %>">Video</span>
+                      </div>
+                      <div class="flex items-center space-x-1">
+                        <div class="w-2 h-2 rounded-full <%= article.status.in?(['uploaded', 'published']) ? 'bg-green-500' : 'bg-gray-300' %>"></div>
+                        <span class="<%= article.status.in?(['uploaded', 'published']) ? 'text-green-600 font-medium' : 'text-gray-500' %>">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex items-center space-x-4 ml-4">
+                <div class="text-sm">
+                  <span class="px-3 py-1 text-xs font-semibold rounded-full 
+                    <%= article.status == 'published' ? 'bg-green-100 text-green-800' : 
+                        article.status == 'uploaded' ? 'bg-green-100 text-green-800' :
+                        article.status == 'failed' ? 'bg-red-100 text-red-800' : 
+                        'bg-blue-100 text-blue-800' %>">
+                    <%= article.status.humanize %>
+                  </span>
+                </div>
+                <% if article.youtube_url.present? %>
+                  <%= link_to article.youtube_url, target: '_blank', class: 'text-blue-600 hover:text-blue-800 font-medium flex items-center' do %>
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                    View
+                  <% end %>
+                <% end %>
+                <% if article.status == 'failed' %>
+                  <%= link_to retry_article_dashboard_path(article), method: :post, class: 'text-green-600 hover:text-green-800 font-medium flex items-center' do %>
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    Retry
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+        <% if @recent_videos.empty? %>
+          <li class="px-6 py-12 text-center">
+            <div class="text-gray-400">
+              <svg class="mx-auto h-12 w-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+              </svg>
+              <p class="text-lg font-medium">No videos yet</p>
+              <p class="text-sm">Start crawling to generate your first AI news video!</p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <!-- Enhanced Failed Jobs -->
+    <% if @failed_jobs.any? %>
+      <div class="bg-white shadow-xl overflow-hidden sm:rounded-2xl border border-red-100">
+        <div class="px-6 py-6 sm:px-8 bg-gradient-to-r from-red-50 to-white">
+          <h3 class="text-2xl font-bold text-red-800 flex items-center">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+            </svg>
+            Recent Failures
+          </h3>
+          <p class="mt-2 text-red-600">Jobs that need attention and retry</p>
+        </div>
+        <ul class="divide-y divide-red-100">
+          <% @failed_jobs.each do |log| %>
+            <li class="px-6 py-6 sm:px-8 hover:bg-red-50 transition-colors duration-200">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-base font-semibold text-gray-900">
+                    <%= log.step.humanize %> - <%= truncate(log.news_article.title, length: 50) %>
+                  </div>
+                  <div class="text-sm text-red-600 mt-1 bg-red-50 p-2 rounded-lg">
+                    <%= log.error_message %>
+                  </div>
+                  <div class="text-sm text-gray-500 mt-2">
+                    <%= time_ago_in_words(log.created_at) %> ago
+                  </div>
+                </div>
+                <div>
+                  <%= link_to retry_article_dashboard_path(log.news_article), method: :post, class: 'bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium flex items-center transition-colors duration-200' do %>
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    Retry
+                  <% end %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- JavaScript for Real-time Progress Tracking -->
+<script>
+  class DashboardProgress {
+    constructor() {
+      this.intervalId = null;
+      this.isPolling = false;
+      this.refreshIntervalId = null;
+    }
+
+    startPolling() {
+      if (this.isPolling) return;
+      
+      this.isPolling = true;
+      this.intervalId = setInterval(() => {
+        this.fetchProgress();
+      }, 2000); // Poll every 2 seconds
+      
+      // Auto-refresh page every 15 seconds to update article statuses
+      this.refreshIntervalId = setInterval(() => {
+        this.refreshPage();
+      }, 15000);
+      
+      // Initial fetch
+      this.fetchProgress();
+    }
+
+    stopPolling() {
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
+      if (this.refreshIntervalId) {
+        clearInterval(this.refreshIntervalId);
+        this.refreshIntervalId = null;
+      }
+      this.isPolling = false;
+    }
+
+    refreshPage() {
+      // Only refresh if there are active jobs
+      const pendingItems = document.querySelectorAll('[data-status="pending"], [data-status="script_ready"], [data-status="audio_ready"], [data-status="video_ready"]');
+      if (pendingItems.length > 0) {
+        console.log('Auto-refreshing dashboard to update progress...');
+        window.location.reload();
+      }
+    }
+
+    async fetchProgress() {
+      try {
+        const response = await fetch('/dashboard/progress');
+        const data = await response.json();
+        
+        this.updateProgress(data);
+        
+        // Stop polling if nothing is active
+        if (!data.crawling.active && !data.pipeline.active) {
+          this.stopPolling();
+          setTimeout(() => {
+            this.hideProgressSection();
+          }, 3000);
+        }
+      } catch (error) {
+        console.error('Error fetching progress:', error);
+      }
+    }
+
+    updateProgress(data) {
+      const section = document.getElementById('progress-section');
+      
+      if (data.crawling.active || data.pipeline.active) {
+        section.style.display = 'block';
+      }
+
+      // Update crawling progress
+      if (data.crawling.active) {
+        this.updateCrawlingProgress(data.crawling);
+      } else if (data.crawling.completed) {
+        this.showCrawlingComplete(data.crawling);
+      }
+
+      // Update pipeline progress  
+      if (data.pipeline.active) {
+        this.updatePipelineProgress(data.pipeline);
+      } else if (data.pipeline.completed) {
+        this.showPipelineComplete(data.pipeline);
+      }
+    }
+
+    updateCrawlingProgress(crawling) {
+      const container = document.getElementById('crawling-progress');
+      container.style.display = 'block';
+      
+      document.getElementById('crawling-message').textContent = crawling.message;
+      document.getElementById('crawling-percentage').textContent = `${crawling.progress}%`;
+      document.getElementById('crawling-bar').style.width = `${crawling.progress}%`;
+      document.getElementById('crawling-elapsed').textContent = `Elapsed: ${crawling.elapsed}s`;
+      document.getElementById('crawling-remaining').textContent = `Est. remaining: ${crawling.estimated_remaining}s`;
+    }
+
+    showCrawlingComplete(crawling) {
+      const container = document.getElementById('crawling-progress');
+      container.style.display = 'block';
+      
+      document.getElementById('crawling-message').textContent = `✅ Crawling complete! Found ${crawling.articles_found} articles`;
+      document.getElementById('crawling-percentage').textContent = '100%';
+      document.getElementById('crawling-bar').style.width = '100%';
+      document.getElementById('crawling-remaining').textContent = 'Complete';
+    }
+
+    updatePipelineProgress(pipeline) {
+      const container = document.getElementById('pipeline-progress');
+      container.style.display = 'block';
+      
+      document.getElementById('pipeline-message').textContent = pipeline.message;
+      document.getElementById('pipeline-percentage').textContent = `${pipeline.progress}%`;
+      document.getElementById('pipeline-bar').style.width = `${pipeline.progress}%`;
+      document.getElementById('pipeline-stats').textContent = `${pipeline.completed}/${pipeline.total} completed`;
+      document.getElementById('pipeline-processing').textContent = `${pipeline.processing} processing`;
+    }
+
+    showPipelineComplete(pipeline) {
+      const container = document.getElementById('pipeline-progress');
+      container.style.display = 'block';
+      
+      document.getElementById('pipeline-message').textContent = `✅ Pipeline complete! Processed ${pipeline.articles_processed} videos`;
+      document.getElementById('pipeline-percentage').textContent = '100%';
+      document.getElementById('pipeline-bar').style.width = '100%';
+    }
+
+    hideProgressSection() {
+      document.getElementById('progress-section').style.display = 'none';
+      document.getElementById('crawling-progress').style.display = 'none';
+      document.getElementById('pipeline-progress').style.display = 'none';
+    }
+  }
+
+  // Initialize progress tracker
+  const progressTracker = new DashboardProgress();
+
+  // Start polling when page loads if there might be active processes
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check if we just started a process (look for flash messages)
+    const hasNotice = document.querySelector('.bg-green-50');
+    if (hasNotice) {
+      progressTracker.startPolling();
+    }
+  });
+
+  // Also start polling when action buttons are clicked
+  document.querySelectorAll('form[action*="dashboard/start_crawling"], form[action*="dashboard/process_pipeline"]').forEach(form => {
+    form.addEventListener('submit', () => {
+      setTimeout(() => {
+        progressTracker.startPolling();
+      }, 1000);
+    });
+  });
+</script> 

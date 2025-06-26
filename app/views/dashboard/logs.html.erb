@@ -1,0 +1,88 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Generation Logs</h1>
+          <p class="text-gray-600 mt-2">Recent AI pipeline processing logs and status updates</p>
+        </div>
+        <%= link_to dashboard_path, class: 'bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium' do %>
+          ← Back to Dashboard
+        <% end %>
+      </div>
+    </div>
+
+    <div class="bg-white shadow-xl rounded-2xl border border-gray-100">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Article
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Step
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Message
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Time
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @recent_logs.each do |log| %>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm font-medium text-gray-900">
+                    <%= truncate(log.news_article&.title || 'Unknown', length: 40) %>
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    <%= log.news_article&.source %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded-full">
+                    <%= log.step&.humanize %>
+                  </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 py-1 text-xs font-semibold rounded-full
+                    <%= log.status == 'completed' ? 'bg-green-100 text-green-800' : 
+                        log.status == 'failed' ? 'bg-red-100 text-red-800' :
+                        'bg-yellow-100 text-yellow-800' %>">
+                    <%= log.status&.humanize %>
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="text-sm text-gray-900 max-w-xs">
+                    <%= log.error_message.present? ? log.error_message : 'Success' %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <%= time_ago_in_words(log.created_at) %> ago
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        
+        <% if @recent_logs.empty? %>
+          <div class="text-center py-12">
+            <div class="text-gray-400">
+              <svg class="mx-auto h-12 w-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <p class="text-lg font-medium">No logs yet</p>
+              <p class="text-sm">Start the AI pipeline to see processing logs here</p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div> 
